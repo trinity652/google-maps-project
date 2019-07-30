@@ -9,8 +9,6 @@ try:
 except ImportError: 
     pass
 
-
-
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'google_maps.settings')
     try:
