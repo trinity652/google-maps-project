@@ -39,7 +39,7 @@ def create_record(request):
         "form":form
 	}
 
-	return render(request, "record/create.html", context)
+	return render(request, "app1/create.html", context)
 
 #API to get all records
 class RecordAPIView(generics.ListAPIView):
