@@ -32,7 +32,9 @@ def create_record(request):
 		location = geolocator.geocode(instance.location)
 		instance.latitude = location.latitude
 		instance.longitude = location.longitude
+		#Use these parameters to store the image in records db , instance=def store_image(instance.latitute,instance.longitude)
 		instance.save()
+		#Use those to render to BabylonJs requirements and show it on another page render(request,app1/texture.html,context)
 		return HttpResponseRedirect('/')
 
 	context = {  
