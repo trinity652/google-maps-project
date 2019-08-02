@@ -4,7 +4,7 @@
 <div ng-app="appMaps" class="container">
    
   <div id="map_canvas" ng-controller="mainCtrl" class="row">   
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key="></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.1/lodash.js" type="text/javascript"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-simple-logger/0.1.7/angular-simple-logger.min.js"></script>
@@ -43,7 +43,7 @@
       });
       url="https://maps.googleapis.com/maps/api/staticmap?"
 		  zoom=String(10)
-      url.concatenate("center =",marker.location,"&zoom =",zoom,"&size = 400x400&key =","AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74","sensor = false")
+      url.concatenate("center =",marker.location,"&zoom =",zoom,"&size = 400x400&key =","","sensor = false")
       var createScene = function () {
             var scene = new BABYLON.Scene(engine);
 

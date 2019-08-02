@@ -35,7 +35,7 @@ def create_record(request):
 		instance.latitude = location.latitude
 		instance.longitude = location.longitude
 		'''
-		api_key = "AIzaSyDC7FX1KzNYctMx2dzskWfZiQfiDiHXjLk"
+		api_key = ""
 		url = "https://maps.googleapis.com/maps/api/staticmap?"
 		zoom = 10
 		r = requests.get(url + "center =" + str(instance.latitude) +","+str(instance.longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "&sensor = false&size=600x400") 
