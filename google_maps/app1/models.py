@@ -20,4 +20,4 @@ class Record(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 	latitude = models.DecimalField(max_digits=9, decimal_places=6, default=None)
 	longitude = models.DecimalField(max_digits=9, decimal_places=6, default=None)
-	map_img = ImageField(upload_to='/images')
+	map_img = models.ImageField(upload_to='/images')

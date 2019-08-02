@@ -17,10 +17,16 @@ from .serializers import RecordSerializer
 
 geolocator = Nominatim()
 
+import requests
 #View to see all points
 def record_map(request):
 	 
 	return render(request, "home.html")
+def storeMapImage(longitude,latitude):
+	api_key = "AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74"
+	url = "https://maps.googleapis.com/maps/api/staticmap?"
+	zoom = 10
+	r = requests.get(url + "center =" + center +str(latitude) +","+str(longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "sensor = false") 
 
 #create a new location
 def create_record(request):
@@ -32,7 +38,7 @@ def create_record(request):
 		location = geolocator.geocode(instance.location)
 		instance.latitude = location.latitude
 		instance.longitude = location.longitude
-		#Use these parameters to store the image in records db , instance=def store_image(instance.latitute,instance.longitude)
+		
 		instance.save()
 		#Use those to render to BabylonJs requirements and show it on another page render(request,app1/texture.html,context)
 		return HttpResponseRedirect('/')
