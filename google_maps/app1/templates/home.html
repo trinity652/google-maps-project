@@ -9,6 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-simple-logger/0.1.7/angular-simple-logger.min.js"></script>
   <script src="https://rawgit.com/angular-ui/angular-google-maps/2.4.1/dist/angular-google-maps.min.js"></script> 
+  <script src="www.babylonjs.com/babylon.js"></script>
+  <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
   <script type="text/javascript">  
   
   LocFac = "/record/api/";
@@ -39,7 +41,44 @@
           $scope.markers = markers;
          }); 
       });
- 
+      url="https://maps.googleapis.com/maps/api/staticmap?"
+		  zoom=String(10)
+      url.concatenate("center =",marker.location,"&zoom =",zoom,"&size = 400x400&key =","AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74","sensor = false")
+      var createScene = function () {
+            var scene = new BABYLON.Scene(engine);
+
+            //Create a light
+            var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(-60, 60, 80), scene);
+
+            //Create an Arc Rotate Camera - aimed negative z this time
+            var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, 1.0, 210, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, true);
+
+            //Creation of a repeated textured material
+            var materialPlane = new BABYLON.StandardMaterial("texturePlane", scene);
+            materialPlane.diffuseTexture = new BABYLON.Texture(url, scene);
+            materialPlane.specularColor = new BABYLON.Color3(0, 0, 0);
+            materialPlane.backFaceCulling = false;//Allways show the front and the back of an element
+
+            //Creation of a plane
+            var plane = BABYLON.Mesh.CreatePlane("plane", 120, scene);
+            plane.rotation.x = Math.PI / 2;
+            plane.material = materialPlane;
+
+            return scene;
+
+       };
+      var scene = createScene(); //Call the createScene function
+
+      engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
+              scene.render();
+      });
+
+
+      window.addEventListener("resize", function () { // Watch for browser/canvas resize events
+              engine.resize();
+      });
+      
   </script> 
  
  <style>  
@@ -86,7 +125,7 @@
 		  
 		 <input type="submit" value="Save" class="btn btn-md btn-primary">  
 		</form>
-        <!--end form to add a new record-->
+    <canvas id="renderCanvas" touch-action="none"></canvas>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

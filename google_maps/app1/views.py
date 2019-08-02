@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from PIL import Image
+from django.core.files.base import ContentFile
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -33,13 +34,18 @@ def create_record(request):
 		location = geolocator.geocode(instance.location)
 		instance.latitude = location.latitude
 		instance.longitude = location.longitude
-		api_key = "AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74"
+		'''
+		api_key = "AIzaSyDC7FX1KzNYctMx2dzskWfZiQfiDiHXjLk"
 		url = "https://maps.googleapis.com/maps/api/staticmap?"
 		zoom = 10
-		r = requests.get(url + "center =" + center +str(latitude) +","+str(longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "sensor = false") 
-		instance.map_img=r.content
+		r = requests.get(url + "center =" + str(instance.latitude) +","+str(instance.longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "&sensor = false&size=600x400") 
+		im = Image.open(r.content)
+		im.thumbnail((220, 130), Image.ANTIALIAS)
+		thumb_io = BytesIO()
+		im.save(thumb_io, im.format, quality=60)
+		instance.map_img.save(im.filename, ContentFile(thumb_io.get_value()), save=False)
+		'''
 		instance.save()
-		#Use those to render to BabylonJs requirements and show it on another page render(request,app1/texture.html,context)
 		return HttpResponseRedirect('/')
 
 	context = {  
