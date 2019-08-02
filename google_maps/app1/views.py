@@ -22,12 +22,7 @@ import requests
 def record_map(request):
 	 
 	return render(request, "home.html")
-def storeMapImage(longitude,latitude):
-	api_key = "AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74"
-	url = "https://maps.googleapis.com/maps/api/staticmap?"
-	zoom = 10
-	r = requests.get(url + "center =" + center +str(latitude) +","+str(longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "sensor = false") 
-
+  
 #create a new location
 def create_record(request):
 	form = RecordForm(request.POST or None)
@@ -38,7 +33,11 @@ def create_record(request):
 		location = geolocator.geocode(instance.location)
 		instance.latitude = location.latitude
 		instance.longitude = location.longitude
-		
+		api_key = "AIzaSyA9O4CBAM_zSvDCE3GllNugYepBfAZGr74"
+		url = "https://maps.googleapis.com/maps/api/staticmap?"
+		zoom = 10
+		r = requests.get(url + "center =" + center +str(latitude) +","+str(longitude)+"&zoom =" +str(zoom) + "&size = 400x400&key =" +api_key + "sensor = false") 
+		instance.map_img=r.content
 		instance.save()
 		#Use those to render to BabylonJs requirements and show it on another page render(request,app1/texture.html,context)
 		return HttpResponseRedirect('/')
